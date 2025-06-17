@@ -1,34 +1,23 @@
-import React, { useState } from "react";
-
+import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
-import LogoutButton from "./components/LogoutButton";
 import VerifyButton from "./components/VerifyButton";
-function App() {
+import Dashboard from "./components/Dashboard";
+
+const App = () => {
   return (
-    <div className="p-6 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-4">Auth Demo</h1>
-
-      <div className="mb-6">
-        <h2 className="text-xl mb-2">Register</h2>
-        <RegisterForm />
+    <Router>
+      <div className="bg-gray-900 mx-auto space-y-8">
+        <Routes>
+          <Route path="/" element={<RegisterForm />} />
+          <Route path="/login" element={<LoginForm />} />
+          <Route path="/verify" element={<VerifyButton />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
       </div>
-
-      <div className="mb-6">
-        <h2 className="text-xl mb-2">Login</h2>
-        <LoginForm />
-      </div>
-
-      <div>
-        <h2 className="text-xl mb-2">Logout</h2>
-        <LogoutButton />
-      </div>
-      <div>
-        <h2 className="text-xl mb-2">Logout</h2>
-        <VerifyButton />
-      </div>
-    </div>
+    </Router>
   );
-}
+};
 
 export default App;
