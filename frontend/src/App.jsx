@@ -4,6 +4,7 @@ import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import VerifyButton from "./components/VerifyButton";
 import Dashboard from "./components/Dashboard";
+import TimerPage from "./components/TimerPage";
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
           <Route path="/login" element={<LoginForm />} />
           <Route path="/verify" element={<VerifyButton />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/timer" element={<TimerPage />} />
         </Routes>
       </div>
     </Router>
