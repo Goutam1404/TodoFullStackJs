@@ -94,7 +94,7 @@ const TimerPage = () => {
       </h1>
 
       {mode === "timer" && (
-        <form onSubmit={handleCustomSubmit} className="mb-6 flex gap-2 space-y-2">
+        <form onSubmit={handleCustomSubmit} className="mb-6 flex gap space-y-2">
           <div className="flex gap-2">
             <input
               type="number"
