@@ -2,6 +2,7 @@ import User from "../models/User.model.js";
 import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import jwt from "jsonwebtoken"
+import nodemailer from "nodemailer"
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -43,27 +44,28 @@ const registerUser = async (req, res) => {
     await user.save();
 
     //sending an email
-    const transporter = nodemailer.createTransport({
-      host: process.env.MAILTRAP_HOST,
-      port: process.env.MAILTRAP_PORT,
-      secure: false, // true for port 465, false for other ports
-      auth: {
-        user: process.env.MAILTRAP_USERNAME,
-        pass: process.env.MAILTRAP_PASSWORD,
-      },
-    });
+    // const transporter = nodemailer.createTransport({
+    //   host: process.env.MAILTRAP_HOST,
+    //   port: process.env.MAILTRAP_PORT,
+    //   secure: false, // true for port 465, false for other ports
+    //   auth: {
+    //     user: process.env.MAILTRAP_USERNAME,
+    //     pass: process.env.MAILTRAP_PASSWORD,
+    //   },
+    // });
 
-    const mailOption = {
-      from: process.env.MAILTRAP_SENDER, // sender address
-      to: createdUser.email, // list of receivers
-      subject: "Verify your email ", // Subject line
-      text: `Click on the link to verify ${process.env.BASE_URL}/api/v1/users/verify/${token}`,
-    };
-    await transporter.sendMail(mailOption);
-    console.log("Email sent successfully");
+    // const mailOption = {
+    //   from: process.env.MAILTRAP_SENDER, // sender address
+    //   to: createdUser.email, // list of receivers
+    //   subject: "Verify your email ", // Subject line
+    //   text: `Click on the link to verify ${process.env.BASE_URL}/api/v1/users/verify/${token}`,
+    // };
+    // await transporter.sendMail(mailOption);
+    // console.log("Email sent successfully");
 
     return res.status(201).json({
       message: "User registered successfully",
+      token,
       success: true,
     });
   } catch (error) {
