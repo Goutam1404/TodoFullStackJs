@@ -1,7 +1,7 @@
 import { loginUser } from "../services/authService";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import toast from "react-hot-toast";
 const LoginPage = ({ darkTheme }) => {
   const navigate = useNavigate();
   const theme = darkTheme !== undefined ? darkTheme : false;
@@ -12,17 +12,26 @@ const LoginPage = ({ darkTheme }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const loadingToast = toast.loading("Logging in...");
     try {
       const res = await loginUser({ email, password });
+      toast.success(res.message || "Login successful!", {
+        id: loadingToast,
+      });
       // alert(res.message);
       console.log(res.message);
       setTimeout(() => {
         navigate("/dashboard");
-      }, 2500);
+      }, 3000);
       navigate("/dashboard");
     } catch (err) {
       setLoading(false); // stop loading on error
-      alert(err?.response?.data?.message || err.message);
+      toast.error(
+        err.response?.data?.message || "Login failed. Please try again.",
+        {
+          id: loadingToast,
+        }
+      );
     }
   };
 
@@ -81,7 +90,7 @@ const LoginPage = ({ darkTheme }) => {
         </p>
       </form>
       {loading && (
-        <div className="mt-6 flex justify-center items-center">
+        <div className="mt-4 flex justify-center items-center">
           <div className="w-8 h-8 border-4 border-blue-400 border-t-transparent rounded-full animate-spin" />
         </div>
       )}

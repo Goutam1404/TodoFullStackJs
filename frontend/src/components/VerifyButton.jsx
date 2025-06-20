@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { verifyUser } from "../services/authService";
 import { ThemeContext } from "../context/ThemeContext";
-
+import toast from "react-hot-toast";
 const VerifyButton = () => {
   const { darkTheme, setDarkTheme } = useContext(ThemeContext);
   const { token } = useParams();
@@ -15,7 +15,7 @@ const VerifyButton = () => {
       try {
         await verifyUser(token);
         setStatus("success");
-
+        toast.success("Account verified successfully!");
         // Redirect to login after 5 seconds
         setTimeout(() => {
           navigate("/login");
@@ -23,6 +23,7 @@ const VerifyButton = () => {
       } catch (err) {
         console.error(err);
         setStatus("error");
+        toast.error(err.response?.data?.message || "Verification failed");
       }
     };
 

@@ -1,7 +1,7 @@
 import { registerUser } from "../services/authService";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import toast from "react-hot-toast";
 const RegisterPage = ({ darkTheme }) => {
   const navigate = useNavigate();
   const theme = darkTheme != undefined ? darkTheme : false;
@@ -14,7 +14,7 @@ const RegisterPage = ({ darkTheme }) => {
     e.preventDefault();
     try {
       const res = await registerUser({ name, email, password });
-      alert(res.message);
+      toast.success(res.message || "Registered successfully!");
       // if (res.token) {
       //   setTimeout(() => {
       //     navigate(`/verify/${res.token}`);
@@ -23,7 +23,7 @@ const RegisterPage = ({ darkTheme }) => {
       //   alert("No token received");
       // }
     } catch (err) {
-      alert(err.message);
+      toast.error(err.response?.data?.message || "Registration failed!");
     }
   };
 
@@ -75,7 +75,7 @@ const RegisterPage = ({ darkTheme }) => {
           }`}
         />
         <button
-          type="submit"
+          
           className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-lg"
         >
           Register

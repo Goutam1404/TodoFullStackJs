@@ -6,6 +6,7 @@ import VerifyButton from "./components/VerifyButton";
 import Dashboard from "./components/Dashboard";
 import TimerPage from "./components/TImerPage";
 import LandingPage from "./components/LandingPage";
+import { Toaster } from "react-hot-toast";
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
 
@@ -14,45 +15,57 @@ const App = () => {
     console.log("Logged out");
   };
   return (
-    <Router>
-      <div className="bg-gray-900 mx-auto space-y-8">
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <LandingPage darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
-            }
-          />
-          <Route
-            path="/register"
-            element={<RegisterForm darkTheme={darkTheme} />}
-          />
-          <Route path="/login" element={<LoginForm darkTheme={darkTheme} />} />
-          <Route
-            path="/verify/:token"
-            element={
-              <VerifyButton darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <Dashboard
-                darkTheme={darkTheme}
-                setDarkTheme={setDarkTheme}
-                handleLogout={handleLogout}
-              />
-            }
-          />
-          <Route
-            path="/timer"
-            element={
-              <TimerPage darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
-            }
-          />
-        </Routes>
-      </div>
-    </Router>
+    <>
+      <Toaster position="top-right" reverseOrder={false} />
+      <Router>
+        <div className="bg-gray-900 mx-auto space-y-8">
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <LandingPage
+                  darkTheme={darkTheme}
+                  setDarkTheme={setDarkTheme}
+                />
+              }
+            />
+            <Route
+              path="/register"
+              element={<RegisterForm darkTheme={darkTheme} />}
+            />
+            <Route
+              path="/login"
+              element={<LoginForm darkTheme={darkTheme} />}
+            />
+            <Route
+              path="/verify/:token"
+              element={
+                <VerifyButton
+                  darkTheme={darkTheme}
+                  setDarkTheme={setDarkTheme}
+                />
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <Dashboard
+                  darkTheme={darkTheme}
+                  setDarkTheme={setDarkTheme}
+                  handleLogout={handleLogout}
+                />
+              }
+            />
+            <Route
+              path="/timer"
+              element={
+                <TimerPage darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
+              }
+            />
+          </Routes>
+        </div>
+      </Router>
+    </>
   );
 };
 

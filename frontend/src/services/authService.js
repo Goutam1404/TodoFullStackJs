@@ -20,7 +20,10 @@ export const verifyUser = async (token) => {
   const response = await api.get(`/verify/${token}`);
   return response.data;
 };
-// f013b3cb7e91d81511ac4b6e8474a2ab64104abe42fb3476272f42a5370c7d93;
-// name: 'Learn nothing',
-// email: 'qwertyeng100@gmail.com',
-// password: 'ssssss'
+
+// name: 'Goutam',
+// email: 'aman12@gmail.com',
+// password: 'aaasshj56'
+
+  // email: 'prem44@gmail.com',
+  // password: 'premch44'
