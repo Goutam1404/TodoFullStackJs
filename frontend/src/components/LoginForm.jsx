@@ -7,15 +7,22 @@ const LoginPage = ({ darkTheme }) => {
   const theme = darkTheme !== undefined ? darkTheme : false;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await loginUser({ email, password });
-      alert(res.message);
+      // alert(res.message);
+      console.log(res.message);
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2500);
       navigate("/dashboard");
     } catch (err) {
-      alert(err.response?.data?.message || err.message);
+      setLoading(false); // stop loading on error
+      alert(err?.response?.data?.message || err.message);
     }
   };
 
@@ -58,9 +65,10 @@ const LoginPage = ({ darkTheme }) => {
         />
         <button
           type="submit"
-          className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-lg"
+          disabled={loading}
+          className="px-6 py-3 bg-blue-600 text-white rounded hover:bg-blue-700 transition transform hover:scale-105 shadow"
         >
-          Log In
+          {loading ? "Logging in..." : "Login"}
         </button>
         <p>
           Don't have an account?{" "}
@@ -72,6 +80,11 @@ const LoginPage = ({ darkTheme }) => {
           </span>
         </p>
       </form>
+      {loading && (
+        <div className="mt-6 flex justify-center items-center">
+          <div className="w-8 h-8 border-4 border-blue-400 border-t-transparent rounded-full animate-spin" />
+        </div>
+      )}
     </div>
   );
 };

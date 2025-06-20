@@ -15,13 +15,13 @@ const RegisterPage = ({ darkTheme }) => {
     try {
       const res = await registerUser({ name, email, password });
       alert(res.message);
-      if (res.token) {
-        setTimeout(() => {
-          navigate(`/verify/${res.token}`);
-        }, 2000);
-      } else {
-        alert("No token received");
-      }
+      // if (res.token) {
+      //   setTimeout(() => {
+      //     navigate(`/verify/${res.token}`);
+      //   }, 2000);
+      // } else {
+      //   alert("No token received");
+      // }
     } catch (err) {
       alert(err.message);
     }

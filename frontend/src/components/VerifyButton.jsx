@@ -3,31 +3,30 @@ import { useNavigate, useParams } from "react-router-dom";
 import { verifyUser } from "../services/authService";
 import { ThemeContext } from "../context/ThemeContext";
 
-const VerifyPage = () => {
+const VerifyButton = () => {
   const { darkTheme, setDarkTheme } = useContext(ThemeContext);
   const { token } = useParams();
   const navigate = useNavigate();
-  const [verified, setVerified] = useState(false);
+
+  const [status, setStatus] = useState("verifying"); // 'verifying', 'success', 'error'
 
   useEffect(() => {
     const handleVerify = async () => {
       try {
-        const res = await verifyUser(token);
-        console.log(res.message);
-        setVerified(true);
+        await verifyUser(token);
+        setStatus("success");
 
-        // Redirect after short delay
+        // Redirect to login after 5 seconds
         setTimeout(() => {
-          navigate("/dashboard");
-        }, 1500); // 1.5s to enjoy the animation
+          navigate("/login");
+        }, 5000);
       } catch (err) {
-        alert(err?.response?.data?.message || err.message);
+        console.error(err);
+        setStatus("error");
       }
     };
 
-    if (token) {
-      handleVerify();
-    }
+    if (token) handleVerify();
   }, [token, navigate]);
 
   return (
@@ -51,11 +50,21 @@ const VerifyPage = () => {
         </button>
       </div>
 
-      {verified ? (
-        <div className="flex flex-col items-center justify-center animate-fadeIn">
-          <div className="w-24 h-24 mb-6 flex items-center justify-center rounded-full bg-green-500 animate-bounce shadow-lg">
+      {status === "verifying" && (
+        <>
+          <div className="w-20 h-20 border-8 border-blue-400 border-t-transparent rounded-full animate-spin mb-6"></div>
+          <h1 className="text-3xl font-semibold mb-2">
+            Verifying your account...
+          </h1>
+          <p className="text-lg">Please wait, redirecting shortly.</p>
+        </>
+      )}
+
+      {status === "success" && (
+        <>
+          <div className="w-20 h-20 mb-6 flex items-center justify-center rounded-full bg-green-500 shadow-lg animate-bounce">
             <svg
-              className="w-12 h-12 text-white"
+              className="w-10 h-10 text-white"
               fill="none"
               stroke="currentColor"
               strokeWidth={3}
@@ -68,24 +77,50 @@ const VerifyPage = () => {
               />
             </svg>
           </div>
-          <h1 className="text-3xl font-bold mb-2 text-green-600">
+          <h1 className="text-3xl font-semibold mb-2 text-green-400">
             Account Verified!
           </h1>
-          <p className="text-lg">Redirecting to dashboard...</p>
-        </div>
-      ) : (
+          <p className="text-lg">Redirecting to login page...</p>
+        </>
+      )}
+
+      {status === "error" && (
         <>
-          <h1 className="text-4xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400 drop-shadow-lg">
-            Verifying your account...
+          <div className="w-20 h-20 mb-6 flex items-center justify-center rounded-full bg-red-500 shadow-lg animate-pulse">
+            <svg
+              className="w-10 h-10 text-white"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={3}
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </div>
+          <h1 className="text-3xl font-semibold mb-2 text-red-400">
+            Verification Failed
           </h1>
-          <p className="text-xl">Please wait while we confirm your email.</p>
+          <p className="text-lg mb-4">
+            The verification link may be invalid or expired. Please register
+            again.
+          </p>
+          <button
+            onClick={() => navigate("/register")}
+            className="px-6 py-3 bg-red-600 text-white font-semibold rounded-full hover:bg-red-700 transition transform hover:scale-105 shadow-lg"
+          >
+            Register Again
+          </button>
         </>
       )}
     </div>
   );
 };
 
-export default VerifyPage;
+export default VerifyButton;
 
 // return (
 //   <div className="space-y-2">
