@@ -1,18 +1,28 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import RegisterForm from "./components/RegisterForm";
 import LoginForm from "./components/LoginForm";
 import VerifyButton from "./components/VerifyButton";
 import Dashboard from "./components/Dashboard";
 import TimerPage from "./components/TImerPage";
 import LandingPage from "./components/LandingPage";
+import { logoutUser } from "./services/authService";
 import { Toaster } from "react-hot-toast";
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // Clear cookie, localStorage, or token logic
-    console.log("Logged out");
+    try {
+      const res = await logoutUser();
+      alert(res.message);
+      console.log("Logged out");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 2000);
+    } catch (err) {
+      alert(err.message);
+    }
   };
   return (
     <>

@@ -154,6 +154,7 @@ const loginUser = async (req, res) => {
         success: false,
       });
     }
+    
     // console.log("assigning token");
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "24h",
