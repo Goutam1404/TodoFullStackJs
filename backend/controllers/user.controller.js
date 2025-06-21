@@ -40,9 +40,6 @@ const registerUser = async (req, res) => {
     console.log(token);
     user.verificationToken = token;
 
-    //saving the user in database
-    await user.save();
-
     //sending an email
     const transporter = nodemailer.createTransport({
       host: process.env.MAILTRAP_HOST,
@@ -63,7 +60,10 @@ const registerUser = async (req, res) => {
     await transporter.sendMail(mailOption);
     console.log("Email sent successfully");
 
-    return res.status(201).json({
+    //saving the user in database
+    await user.save();
+    
+    return res.status(200).json({
       message: "User registered successfully",
       token,
       success: true,

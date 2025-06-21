@@ -75,7 +75,6 @@ const RegisterPage = ({ darkTheme }) => {
           }`}
         />
         <button
-          
           className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition duration-300 transform hover:scale-105 shadow-lg"
         >
           Register

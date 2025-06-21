@@ -27,3 +27,5 @@ export const verifyUser = async (token) => {
 
   // email: 'prem44@gmail.com',
   // password: 'premch44'
+
+  // email: 'gaurav12@gmail.com', password: '12345'
