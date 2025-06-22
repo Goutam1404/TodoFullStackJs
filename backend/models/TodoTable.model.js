@@ -1,6 +1,7 @@
 import mongoose, { Schema } from "mongoose";
+import Todos from "./Todo.model"
 
-const notesSchema= new Schema({
+const todoTableSchema= new Schema({
     user:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User',
@@ -10,13 +11,12 @@ const notesSchema= new Schema({
         type:String,
         required:true,
     },
-    description:{
-        type:String
-    },
+    todo:[Todos]
+    
 },{
     timestamps:true
 })
 
-const Notes=mongoose.model("Notes",notesSchema);
+const TodoTable = mongoose.model("TodoTable", todoTableSchema);
 
-export default Notes
+export default TodoTable

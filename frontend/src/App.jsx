@@ -8,6 +8,7 @@ import TimerPage from "./components/TImerPage";
 import LandingPage from "./components/LandingPage";
 import { logoutUser } from "./services/authService";
 import { Toaster } from "react-hot-toast";
+import Header from "./components/Header";
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
 
@@ -26,6 +27,7 @@ const App = () => {
   };
   return (
     <>
+      {/* <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme} user={user} /> */}
       <Toaster position="top-right" reverseOrder={false} />
       <Router>
         <div className="bg-gray-900 mx-auto space-y-8">
