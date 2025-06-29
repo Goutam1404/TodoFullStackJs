@@ -28,9 +28,15 @@ const App = () => {
   return (
     <>
       {/* <Header darkTheme={darkTheme} setDarkTheme={setDarkTheme} user={user} /> */}
+
       <Toaster position="top-right" reverseOrder={false} />
       <Router>
         <div className="bg-gray-900 mx-auto space-y-8">
+          <Header
+            darkTheme={darkTheme}
+            setDarkTheme={setDarkTheme}
+            user={{ name: "John Doe" }} // ✅ This line defines user
+          />
           <Routes>
             <Route
               path="/"
