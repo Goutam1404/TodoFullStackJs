@@ -1,43 +1,56 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { logoutUser } from "../services/authService";
+import LogoutButton from "./LogoutButton";
 
 const ProfileMenu = ({ user, darkTheme, setDarkTheme }) => {
   const [open, setOpen] = useState(false);
-  const navigate = useNavigate();
+  const menuRef = useRef(null);
 
-  const handleLogout = () => {
-    // TODO: Call logout API if needed
-    navigate("/login");
-  };
+  const toggleTheme = () => setDarkTheme((prev) => !prev);
+  const toggleMenu = () => setOpen((prev) => !prev);
+//  const handleLogout = async () => {
+//     try {
+//       const res = await logoutUser();
+//       alert(res.message);
+//     } catch (err) {
+//       alert(err.message);
+//     }
+//   };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (menuRef.current && !menuRef.current.contains(e.target)) {
+        setOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div className="relative">
+    <div className="relative" ref={menuRef}>
       <button
-        onClick={() => setOpen(!open)}
-        className="rounded-full w-10 h-10 bg-gray-600 text-white font-bold hover:bg-gray-700"
+        onClick={toggleMenu}
+        className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-500 to-teal-400 text-white font-bold text-sm"
       >
-        {user?.name?.[0]?.toUpperCase() || "U"}
+        {user?.name?.[0] || "U"}
       </button>
-
       {open && (
         <div
-          className={`absolute right-0 mt-2 w-48 p-4 rounded-md shadow-lg z-50 transition-all duration-300 ${
+          className={`absolute right-0 mt-2 w-40 p-2 rounded-md shadow-lg z-50 ${
             darkTheme ? "bg-gray-800 text-white" : "bg-white text-black"
           }`}
         >
-          <p className="font-semibold mb-2">{user?.name || "User"}</p>
+          <p className="text-sm font-semibold">{user?.name || "User"}</p>
+          <hr className="my-1 border-white/20" />
           <button
-            onClick={() => setDarkTheme((prev) => !prev)}
-            className="block w-full text-left py-1 hover:underline"
+            onClick={toggleTheme}
+            className="w-full text-left py-1 hover:underline"
           >
             {darkTheme ? "Light Mode" : "Dark Mode"}
           </button>
-          <button
-            onClick={handleLogout}
-            className="block w-full text-left py-1 text-red-500 hover:underline"
-          >
-            Logout
-          </button>
+         <LogoutButton/>
         </div>
       )}
     </div>

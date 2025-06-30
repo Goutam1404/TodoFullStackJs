@@ -12,7 +12,7 @@ const DashboardPage = ({ darkTheme, setDarkTheme, handleLogout }) => {
 
   return (
     <div
-      className={`${themeStyles} min-h-screen px-4 md:px-8 mt-4 py-4 transition-all duration-500`}
+      className={`${themeStyles} pt-20 min-h-screen px-4 md:px-8 py-4  transition-all duration-500`}
     >
       {/* HEADER */}
       {/* <header className="flex justify-between items-center mb-8">

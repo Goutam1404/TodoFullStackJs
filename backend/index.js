@@ -5,6 +5,7 @@ import cors from "cors";
 
 import db from "./utils/db.js";
 import userRouter from "./routes/user.route.js";
+import notesRouter from "./routes/note.route.js";
 
 const port = process.env.PORT || 8000;
 const app = express();
@@ -30,3 +31,4 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/user", userRouter);
+app.use("/api/v1/note",notesRouter);

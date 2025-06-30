@@ -38,8 +38,8 @@ const Header = ({ darkTheme, setDarkTheme, user }) => {
       <div className="max-w-screen-xl mx-auto flex justify-between items-center px-6 py-3">
         {/* Logo */}
         <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-teal-400">
-          <NavLink to="/dashboard">
-          MultiTask
+          <NavLink to="/dashboard" onClick={() => setMenuOpen(false)}>
+            MultiTask
           </NavLink>
         </div>
 
