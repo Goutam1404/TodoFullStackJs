@@ -9,7 +9,8 @@ const createNote = async (req, res) => {
         message: "Some fields are missing",
       });
     }
-
+      console.log("Creating the note");
+      
     const note = await Notes.create({ title, description, user: req.user.id });
     if (!note) {
       return res.status(400).json({

@@ -9,6 +9,7 @@ import LandingPage from "./components/LandingPage";
 import { logoutUser } from "./services/authService";
 import { Toaster } from "react-hot-toast";
 import Header from "./components/Header";
+import NotesPage from "./pages/NotesPage";
 const App = () => {
   const [darkTheme, setDarkTheme] = useState(false);
 
@@ -19,7 +20,7 @@ const App = () => {
       alert(res.message);
       console.log("Logged out");
       setTimeout(() => {
-        navigate("/dashboard");
+        Navigate("/dashboard");
       }, 2000);
     } catch (err) {
       alert(err.message);
@@ -79,6 +80,10 @@ const App = () => {
               element={
                 <TimerPage darkTheme={darkTheme} setDarkTheme={setDarkTheme} />
               }
+            />
+            <Route
+              path="/notes"
+              element={<NotesPage darkTheme={darkTheme} />}
             />
           </Routes>
         </div>
