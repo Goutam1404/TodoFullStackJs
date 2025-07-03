@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import crypto from "crypto";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
+
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -62,7 +63,7 @@ const registerUser = async (req, res) => {
 
     //saving the user in database
     await user.save();
-    
+
     return res.status(200).json({
       message: "User registered successfully",
       token,
@@ -154,17 +155,18 @@ const loginUser = async (req, res) => {
         success: false,
       });
     }
-    
-    // console.log("assigning token");
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "24h",
-    });
 
+    // console.log("assigning token");
+    //with the token we are passing the user id
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "24h", //user login expires in 24h after 24h user need to login again
+    });
     // console.log("final return");
+    //The created token need to be given to the user but how, so it can be given to the user with the help of cookies assigned to it
     const cookieOption = {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000,
+      maxAge: 24 * 60 * 60 * 1000, //24 hours
     };
 
     res.cookie("token", token, cookieOption);
@@ -209,6 +211,8 @@ const getProfile = async (req, res) => {
 const logOutUser = async (req, res) => {
   try {
     res.cookie("token", "", {});
+    console.log("Inside logout route");
+    
     res.status(200).json({
       message: "User Logout successful",
       success: true,
